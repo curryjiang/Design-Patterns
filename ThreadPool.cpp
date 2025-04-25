@@ -23,6 +23,7 @@ public:
    ThreadPool(ThreadPool&& obj) = delete;
    ThreadPool& operator=(const ThreadPool&& obj) = delete;
    
+   //插入任务到任务队列中
    template<typename F, typename...Args>
    void enqueue(F&& f, Args&&... args){
        {
@@ -34,7 +35,7 @@ public:
        }
        condition.notify_one();
    }
-
+   
    void shutdown(){
     {
         std::unique_lock<std::mutex>lock(queueMutex);
